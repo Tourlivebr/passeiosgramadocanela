@@ -134,11 +134,11 @@ const passeios = [
   <!-- Cabeçalho da seção -->
   <div class="text-center mb-6 relative z-20">
     <div class="flex items-center justify-center mb-6">
-      <div class="h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent flex-1 max-w-xs"></div>
+      <div class="h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent flex-1 max-w-xs"></div>
       <h2 class="text-3xl lg:text-4xl font-bold text-dark-900 dark:text-white mx-8">
         Ingressos e Atrações em <span class="text-primary-600 dark:text-primary-400">Gramado e Canela</span>
       </h2>
-      <div class="h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent flex-1 max-w-xs"></div>
+      <div class="h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent flex-1 max-w-xs"></div>
     </div>
   </div>
 
@@ -183,7 +183,7 @@ const passeios = [
                     href={passeio.linkOficial}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors duration-200 block text-center text-base shadow-md"
+                    class="w-full bg-accent-600 hover:bg-accent-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors duration-200 block text-center text-base shadow-md"
                   >
                     <span class="flex items-center justify-center">
                       RESERVE AGORA
@@ -386,7 +386,7 @@ const passeios = [
                 href="\${passeio.linkOficial || '/'}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors duration-200 block text-center text-base shadow-md"
+                class="w-full bg-accent-600 hover:bg-accent-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors duration-200 block text-center text-base shadow-md"
               >
                 <span class="flex items-center justify-center">
                   RESERVE AGORA
@@ -433,7 +433,7 @@ const passeios = [
       const indicators = indicatorsContainer.children;
       for (let i = 0; i < indicators.length; i++) {
         indicators[i].className = `w-2 h-2 rounded-full transition-colors ${
-          i === currentSlide ? 'bg-primary-600' : 'bg-dark-300'
+          i === currentSlide ? 'bg-accent-500' : 'bg-dark-300'
         }`;
       }
     }
@@ -457,7 +457,7 @@ const passeios = [
       for (let i = 0; i < totalSlides; i++) {
         const indicator = document.createElement('button');
         indicator.className = `w-2 h-2 rounded-full transition-colors ${
-          i === currentSlide ? 'bg-primary-600' : 'bg-dark-300'
+          i === currentSlide ? 'bg-accent-500' : 'bg-dark-300'
         }`;
         indicator.addEventListener('click', () => {
           currentSlide = i;
