@@ -45,6 +45,7 @@ const ogHeight =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#003b08" />
     <meta name="generator" content={Astro.generator} />
     
     <!-- SEO Meta Tags -->
@@ -133,43 +134,7 @@ const ogHeight =
 
     
     <style>
-      :root {
-        /* Paleta Passeios Gramado Canela — extraída fielmente da logo oficial
-           Primary: VERDE FLORESTA (montanhas + "Gramado" + anel externo — cor de identidade Serra Gaúcha)
-           Accent:  DOURADO BRONZE (sol + "Tchê" + anel interno + caminho — tom de luxo/destaque)
-           Cream:   CREME OFF-WHITE (fundo circular da logo — base aconchegante)
-           Dark:    Neutros quentes alinhados com o creme e o verde profundo */
-        --clr-primary-50:  #F3F7F3;
-        --clr-primary-100: #DFE8E0;
-        --clr-primary-200: #BDCFBF;
-        --clr-primary-300: #8FB292;
-        --clr-primary-400: #5C8A63;
-        --clr-primary-500: #3A6841;
-        --clr-primary-600: #2A5031;
-        --clr-primary-700: #203E26;
-        --clr-primary:      #2A5031;  /* verde floresta (montanhas + "Gramado") */
 
-        --clr-accent-50:  #FBF4E3;
-        --clr-accent-100: #F4E3B9;
-        --clr-accent-200: #EACA7E;
-        --clr-accent-300: #DFA953;
-        --clr-accent-400: #CE8A37;
-        --clr-accent-500: #B57323;
-        --clr-accent-600: #9D601C;
-        --clr-accent:      #B57323;  /* dourado bronze ("Tchê" + anel interno) */
-
-        --clr-cream-50:   #FDF8EC;
-
-        --clr-dark-50:  #FAF6ED;
-        --clr-dark-100: #EEE7D5;
-        --clr-dark-300: #BBAD88;
-        --clr-dark-500: #5E5336;
-        --clr-dark-700: #282415;
-        --clr-dark-800: #1A180E;
-        --clr-dark:      #1A180E;
-
-        --clr-whatsapp: #25D366;
-      }
       html {
         scroll-behavior: smooth;
       }
@@ -179,7 +144,7 @@ const ogHeight =
       }
     </style>
   </head>
-  <body class="bg-white text-dark-800 font-sans antialiased">
+  <body class="bg-cream-50 text-dark-800 font-sans antialiased">
     <slot />
     <WhatsAppButton />
   </body>
