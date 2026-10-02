@@ -1,8 +1,9 @@
 ---
+const { home = false } = Astro.props;
 // Remover todo o array todosPasseios daqui - agora será definido no JavaScript
 ---
 
-<header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 dark:bg-dark-900/50 backdrop-blur-md border-b border-dark-200/20 dark:border-dark-700/20">
+<header class:list={{ "home-header": home }} id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 dark:bg-dark-900/50 backdrop-blur-md border-b border-dark-200/20 dark:border-dark-700/20">
   <div class="container mx-auto px-2 lg:px-4">
     <nav class="header-nav flex items-center justify-between h-20 lg:h-28" aria-label="Navegação principal">
       <!-- Logo -->
@@ -366,11 +367,10 @@
     console.log('Filtered results:', filteredPasseios); // Debug
     
     if (filteredPasseios.length === 0) {
-      resultsContainer.innerHTML = `
-        <div class="p-4 text-dark-500 text-center">
-          Nenhum passeio encontrado para "${query}"
-        </div>
-      `;
+      const message = document.createElement('div');
+      message.className = 'p-4 text-dark-500 text-center';
+      message.textContent = 'Nenhum passeio encontrado para "' + query + '"';
+      resultsContainer.replaceChildren(message);
     } else {
       resultsContainer.innerHTML = filteredPasseios.map(passeio => {
         const href = `/${passeio.slug}`;
@@ -387,6 +387,18 @@
     resultsContainer.classList.remove('hidden');
   }
   
+  const heroSearchInput = document.getElementById('hero-search-input');
+  const heroSearchResults = document.getElementById('hero-search-results');
+  heroSearchInput?.addEventListener('input', (event) => {
+    performSearch((event.target as HTMLInputElement).value, heroSearchResults);
+  });
+  heroSearchInput?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') heroSearchResults?.classList.add('hidden');
+  });
+  document.addEventListener('click', (event) => {
+    if (!(event.target as Element).closest('.hero-search-wrap')) heroSearchResults?.classList.add('hidden');
+  });
+
   // Desktop search
   searchInput?.addEventListener('input', (e) => {
     performSearch(e.target.value, searchResults);
@@ -529,6 +541,18 @@
 </script>
 
 <style>
+  #header.home-header:not(.scrolled){background:transparent;border-color:transparent;backdrop-filter:none}
+  #header.home-header .header-nav{max-width:1440px;margin:auto;padding:0 32px}
+  #header.home-header:not(.scrolled) .header-nav>div,
+  #header.home-header:not(.scrolled) .header-nav>ul,
+  #header.home-header:not(.scrolled) .header-mobile-search-btn{display:none!important}
+  #header.home-header #mobile-menu-button{display:inline-flex;border:1px solid currentColor;border-radius:50%;padding:12px}
+  #header.home-header:not(.scrolled) #mobile-menu-button{color:white}
+  #header.home-header #mobile-menu{width: min(420px,100%);left:auto;right:0}
+  #header.home-header #mobile-menu:not(.hidden){display:block}
+  #header.home-header:not(.scrolled) .header-logo{display:flex!important}
+  @media(max-width:767px){#header.home-header .header-nav{padding:0 8px;height:112px}#header.home-header:not(.scrolled) .header-logo{max-width:120px}}
+
   .scrolled {
     @apply h-16 lg:h-20;
   }
