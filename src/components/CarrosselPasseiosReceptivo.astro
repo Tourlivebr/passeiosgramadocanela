@@ -133,23 +133,21 @@ const passeiosReceptivo = [
 ];
 ---
 
-<section id="passeios-receptivo" class="relative pb-12 lg:pb-20 pt-0 bg-gradient-to-br from-dark-50 to-secondary-50 dark:from-dark-900 dark:to-secondary-900">
+<section id="passeios-receptivo" class="relative py-12 lg:py-16">
   <div class="container mx-auto px-4">
     <div class="text-center">
       <div class="flex items-center justify-center mb-6">
-        <div class="h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent flex-1 max-w-xs"></div>
         <h2 class="text-3xl lg:text-4xl font-bold text-dark-900 dark:text-white mx-8">
           Translados e <span class="text-primary-600 dark:text-primary-400">Passeios</span>
         </h2>
-        <div class="h-px bg-gradient-to-r from-transparent via-accent-500 to-transparent flex-1 max-w-xs"></div>
       </div>
     </div>
 
     <div class="relative z-20">
-      <div class="overflow-hidden">
-        <div id="carousel-track-passeios-receptivo" class="flex transition-transform duration-500 ease-in-out">
-          {passeiosReceptivo.map((passeio) => (
-            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-3">
+      <div>
+        <div id="passeios-receptivo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {passeiosReceptivo.map((passeio, index) => (
+            <div data-passeio-card hidden={index >= 4}>
               <div class="bg-white dark:bg-dark-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group h-full flex flex-col">
                 <div class="relative h-44 overflow-hidden">
                   <img 
@@ -205,159 +203,62 @@ const passeiosReceptivo = [
         </div>
       </div>
 
-      <button 
-        id="prev-btn-passeios-receptivo"
-        class="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-dark-800 shadow-lg rounded-full p-3 hover:bg-dark-50 dark:hover:bg-dark-700 transition-colors z-10"
-        aria-label="Anterior"
-      >
-        <svg class="w-6 h-6 text-dark-600 dark:text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      
-      <button 
-        id="next-btn-passeios-receptivo"
-        class="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-dark-800 shadow-lg rounded-full p-3 hover:bg-dark-50 dark:hover:bg-dark-700 transition-colors z-10"
-        aria-label="Próximo"
-      >
-        <svg class="w-6 h-6 text-dark-600 dark:text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
     </div>
 
-    <div id="indicators-passeios-receptivo" class="flex justify-center mt-4 pb-4 gap-2 relative z-20">
+    <div class="flex flex-wrap justify-center gap-4 mt-8 pb-4 relative z-20">
+      <button
+        id="ver-mais-passeios-receptivo"
+        type="button"
+        aria-controls="passeios-receptivo-grid"
+        hidden={passeiosReceptivo.length <= 4}
+        class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-600"
+      >
+        Ver mais
+      </button>
+      <button
+        id="ver-menos-passeios-receptivo"
+        type="button"
+        aria-controls="passeios-receptivo-grid"
+        hidden
+        class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-600"
+      >
+        Ver menos
+      </button>
     </div>
   </div>
 
-  <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-10">
-    <svg 
-      viewBox="0 0 1200 120" 
-      preserveAspectRatio="none" 
-      class="relative block w-[calc(100%+1.3px)] h-[40px] lg:h-[60px]"
-    >
-      <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" class="fill-white dark:fill-dark-900"></path>
-    </svg>
-  </div>
 </section>
 
 <script>
-  function initCarouselPasseiosReceptivo() {
-    let currentSlide = 0;
-    const carouselTrack = document.getElementById('carousel-track-passeios-receptivo');
-    const prevBtn = document.getElementById('prev-btn-passeios-receptivo');
-    const nextBtn = document.getElementById('next-btn-passeios-receptivo');
-    const indicatorsContainer = document.getElementById('indicators-passeios-receptivo');
+  function initPasseiosReceptivo() {
+    const grid = document.getElementById('passeios-receptivo-grid');
+    const moreButton = document.getElementById('ver-mais-passeios-receptivo');
+    const lessButton = document.getElementById('ver-menos-passeios-receptivo');
+    if (!grid || !moreButton || !lessButton || moreButton.dataset.initialized) return;
 
-    if (!carouselTrack || !indicatorsContainer) return;
+    moreButton.dataset.initialized = 'true';
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-passeio-card]'));
+    let visibleCount = cards.filter((card) => !card.hidden).length;
 
-    const visibleItems = [...carouselTrack.children];
-
-    function getSlidesPerView() {
-      const width = window.innerWidth;
-      if (width >= 1280) return 4;
-      if (width >= 1024) return 3;
-      if (width >= 640) return 2;
-      return 1;
-    }
-    
-    function getTotalSlides() {
-      const slidesPerView = getSlidesPerView();
-      return Math.max(1, Math.ceil(visibleItems.length - slidesPerView + 1));
+    function updateCards() {
+      cards.forEach((card, index) => { card.hidden = index >= visibleCount; });
+      moreButton.hidden = visibleCount >= cards.length;
+      lessButton.hidden = visibleCount <= 4;
     }
 
-    function updateIndicators() {
-      const totalSlides = getTotalSlides();
-      indicatorsContainer.innerHTML = '';
-      
-      for (let i = 0; i < totalSlides; i++) {
-        const indicator = document.createElement('button');
-        indicator.className = `w-3 h-3 rounded-full transition-colors ${
-          i === currentSlide ? 'bg-accent-500' : 'bg-dark-300 dark:bg-dark-600'
-        }`;
-        indicator.addEventListener('click', () => {
-          currentSlide = i;
-          updateCarousel();
-        });
-        indicatorsContainer.appendChild(indicator);
-      }
-    }
-    
-    function updateCarousel() {
-      const firstItem = carouselTrack.children[0];
-      const itemWidth = firstItem ? firstItem.getBoundingClientRect().width : 0;
-      carouselTrack.style.transform = `translateX(-${currentSlide * itemWidth}px)`;
-      updateIndicators();
-    }
-
-    function nextSlide() {
-      const totalSlides = getTotalSlides();
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateCarousel();
-    }
-    
-    function prevSlide() {
-      const totalSlides = getTotalSlides();
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateCarousel();
-    }
-
-    nextBtn?.addEventListener('click', nextSlide);
-    prevBtn?.addEventListener('click', prevSlide);
-
-    let startX = 0;
-    let isDragging = false;
-
-    carouselTrack.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      isDragging = true;
-    }, { passive: true });
-    
-    carouselTrack.addEventListener('touchend', (e) => {
-      if (!isDragging) return;
-      
-      const endX = e.changedTouches[0].clientX;
-      const diffX = startX - endX;
-      
-      if (Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
-      }
-      
-      isDragging = false;
-    }, { passive: true });
-
-    let autoPlayInterval;
-    function startAutoPlay() {
-      autoPlayInterval = setInterval(nextSlide, 5000);
-    }
-    
-    function stopAutoPlay() {
-      clearInterval(autoPlayInterval);
-    }
-
-    carouselTrack.addEventListener('mouseenter', stopAutoPlay);
-    carouselTrack.addEventListener('mouseleave', startAutoPlay);
-    carouselTrack.addEventListener('touchstart', stopAutoPlay, { passive: true });
-    carouselTrack.addEventListener('touchend', () => {
-      setTimeout(startAutoPlay, 3000);
-    }, { passive: true });
-
-    window.addEventListener('resize', () => {
-      currentSlide = 0;
-      updateCarousel();
+    moreButton.addEventListener('click', () => {
+      visibleCount = Math.min(cards.length, visibleCount + 4);
+      updateCards();
+      if (moreButton.hidden) lessButton.focus({ preventScroll: true });
     });
 
-    updateCarousel();
-    startAutoPlay();
+    lessButton.addEventListener('click', () => {
+      visibleCount = Math.max(4, visibleCount - 4);
+      updateCards();
+      if (lessButton.hidden) moreButton.focus({ preventScroll: true });
+    });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCarouselPasseiosReceptivo);
-  } else {
-    initCarouselPasseiosReceptivo();
-  }
+  initPasseiosReceptivo();
+  document.addEventListener('astro:page-load', initPasseiosReceptivo);
 </script>
