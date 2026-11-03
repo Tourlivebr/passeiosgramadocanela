@@ -8,6 +8,8 @@ import FormReserva from '../../components/FormReserva.astro';
 // Função necessária para modo estático
 export async function getStaticPaths() {
   return [
+    { params: { slug: 'transfer-grande-desfile-de-natal' } },
+    { params: { slug: 'transfer-nativitaten' } },
     { params: { slug: 'tour-o-quatrilho' } },
     { params: { slug: 'tour-trem-vinho' } },
     { params: { slug: 'tour-vinhos-e-sabores' } },
@@ -26,6 +28,68 @@ export async function getStaticPaths() {
 
 // Dados dos passeios
 const passeiosData = {
+"transfer-grande-desfile-de-natal": {
+  "id": 12,
+  "titulo": "Transfer Grande Desfile de Natal",
+  "subtitulo": "Translado para o espet?culo do Natal Luz no Expogramado. Ingresso n?o incluso.",
+  "categoria": "TRANSFER",
+  "preco": 150,
+  "avaliacao": 5,
+  "totalAvaliacoes": 0,
+  "parcelas": "1 a 4 pessoas:",
+  "price1": 150,
+  "price2": 200,
+  "label1": "1 a 4 pessoas",
+  "label2": "5 a 6 pessoas",
+  "temFaixas": true,
+  "descricao": "Translado para o espet?culo do Natal Luz no Expogramado. Ingresso n?o incluso. Reserve seu transfer e combine os detalhes do transporte com nossa equipe.",
+  "inclusos": [
+    "Translado para o espet?culo"
+  ],
+  "duracao": "A combinar",
+  "horarios": [
+    "A combinar"
+  ],
+  "galeria": [
+    "/images/natal-luz/transfer-grande-desfile.webp"
+  ],
+  "tags": [
+    "Natal Luz",
+    "Transfer",
+    "Ingresso n?o incluso"
+  ]
+},
+"transfer-nativitaten": {
+  "id": 13,
+  "titulo": "Transfer Nativitaten",
+  "subtitulo": "Translado para o espet?culo do Natal Luz no Serra Park. Ingresso n?o incluso.",
+  "categoria": "TRANSFER",
+  "preco": 200,
+  "avaliacao": 5,
+  "totalAvaliacoes": 0,
+  "parcelas": "1 a 4 pessoas:",
+  "price1": 200,
+  "price2": 250,
+  "label1": "1 a 4 pessoas",
+  "label2": "5 a 6 pessoas",
+  "temFaixas": true,
+  "descricao": "Translado para o espet?culo do Natal Luz no Serra Park. Ingresso n?o incluso. Reserve seu transfer e combine os detalhes do transporte com nossa equipe.",
+  "inclusos": [
+    "Translado para o espet?culo"
+  ],
+  "duracao": "A combinar",
+  "horarios": [
+    "A combinar"
+  ],
+  "galeria": [
+    "/images/natal-luz/transfer-nativitaten.webp"
+  ],
+  "tags": [
+    "Natal Luz",
+    "Transfer",
+    "Ingresso n?o incluso"
+  ]
+},
   "tour-o-quatrilho": {
     "id": 1,
     "titulo": "Tour O Quatrilho",
